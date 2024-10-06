@@ -69,6 +69,20 @@ describe("delay", () => {
     }, 0);
   });
 
+  // 2-2. fake timer 활용
+  it("should use a default `wait` of `0` - jest fake timer", () => {
+    jest.useFakeTimers();
+    const mockCallback = jest.fn();
+
+    delay(mockCallback);
+
+    expect(mockCallback).not.toHaveBeenCalled();
+    jest.advanceTimersByTime(0);
+    expect(mockCallback).toHaveBeenCalled();
+
+    jest.useRealTimers(); // 실제시간 사용 (초기화)
+  });
+
   // 3.
   it("should be cancelable", (done) => {
     let pass = true;
