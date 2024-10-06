@@ -1,6 +1,7 @@
 import delay from "./delay";
 
 describe("delay", () => {
+  // setTimeout 활용
   it("should delay `func` execution", (done) => {
     let pass = false;
     delay(() => {
@@ -13,6 +14,24 @@ describe("delay", () => {
 
     setTimeout(() => {
       expect(pass);
+      done();
+    }, 64);
+  });
+
+  // mock 함수 활용
+  it("should delay `func` execution - mock fn", (done) => {
+    const mockCallback = jest.fn();
+
+    delay(mockCallback, 32);
+
+    setTimeout(() => {
+      // 32ms 이전에는 콜백 함수가 호출되지 않아야 합니다.
+      expect(mockCallback).not.toHaveBeenCalled();
+    }, 1);
+
+    setTimeout(() => {
+      // 64ms 후에는 콜백 함수가 호출되어야 합니다.
+      expect(mockCallback).toHaveBeenCalled();
       done();
     }, 64);
   });
