@@ -1,7 +1,7 @@
 import delay from "./delay";
 
 describe("delay", () => {
-  // setTimeout 활용
+  // 1-1.setTimeout 활용
   it("should delay `func` execution", (done) => {
     let pass = false;
     delay(() => {
@@ -13,12 +13,12 @@ describe("delay", () => {
     }, 1);
 
     setTimeout(() => {
-      expect(pass);
+      expect(pass).toBe(true);
       done();
     }, 64);
   });
 
-  // mock 함수 활용
+  // 1-2.mock 함수 활용
   it("should delay `func` execution - mock fn", (done) => {
     const mockCallback = jest.fn();
 
@@ -36,6 +36,7 @@ describe("delay", () => {
     }, 64);
   });
 
+  // 2.
   it("should use a default `wait` of `0`", (done) => {
     let pass = false;
     delay(() => {
@@ -45,11 +46,12 @@ describe("delay", () => {
     expect(pass).toBe(false);
 
     setTimeout(() => {
-      expect(pass);
+      expect(pass).toBe(true);
       done();
     }, 0);
   });
 
+  // 3.
   it("should be cancelable", (done) => {
     let pass = true;
     const timerId = delay(() => {
@@ -59,11 +61,12 @@ describe("delay", () => {
     clearTimeout(timerId);
 
     setTimeout(() => {
-      expect(pass);
+      expect(pass).toBe(true);
       done();
     }, 64);
   });
 
+  // 4.
   it("should provide additional arguments to `func`", (done) => {
     const mockFn = jest.fn();
 
